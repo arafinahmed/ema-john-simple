@@ -5,9 +5,12 @@ import Reviewitem from '../Reviewitem/Reviewitem';
 import Cart from '../Cart/Cart';
 import './Review.css'
 import happyImage from '../../images/giphy.gif'
+import { Link } from 'react-router-dom';
+import { useAuth } from '../Login/useAuth';
 
 
 const Review = () => {
+    const auth = useAuth();
     const [cart, setCart] = useState([]);
     const [orderPlaced, setOrderPlaced] = useState(false);
     const removeProduct = (proKey) => {
@@ -56,10 +59,20 @@ const Review = () => {
             {
                 thankyou
             }
+            {
+                !cart.length && <h1>Your cart is empty
+                    <a href="/"> Keep Shopping</a>
+                </h1>
+            }
             </div>
             <div className="cart-container">
                 <Cart cart={cart}>
-                    <button onClick={handlePlaceOrder} className="main-button">Place order</button>
+                    <Link to="/ship">
+                    {   auth.user ?
+                        <button  className="main-button">Proceed order</button> :
+                        <button  className="main-button">Log in to Proceed</button>
+                    }
+                    </Link>
                 </Cart>
             </div>
             

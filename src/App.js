@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import Shop from './components/Shop/Shop';
@@ -12,9 +12,17 @@ import Review from './components/Review/Review';
 import Manage from './components/Manage/Manage';
 import NotFound from './components/NotFound/NotFound';
 import ProductDetails from './components/ProductDetails/ProductDetails';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Login from './components/Login/Login';
+import { AuthProvider, PrivateRoute } from './components/Login/useAuth';
+import Ship from './components/Ship/Ship';
+
+export const UserContext = createContext();
+
 function App() {
   return (
     <div>
+      <AuthProvider>
       <Header></Header>
       <Router>
         <Switch>
@@ -34,11 +42,18 @@ function App() {
           <Route path="/product/:key">
               <ProductDetails></ProductDetails>
           </Route>
+          <Route path="/login">
+            <Login></Login>
+          </Route>
+          <PrivateRoute path="/ship">
+            <Ship></Ship>
+          </PrivateRoute>
           <Route path="*">
             <NotFound></NotFound>
           </Route>
         </Switch>
-      </Router>          
+      </Router> 
+      </AuthProvider>        
     </div>
   );
 }

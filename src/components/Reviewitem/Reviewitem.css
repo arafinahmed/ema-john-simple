@@ -2,5 +2,9 @@
     border-bottom: 1px solid gray;
     padding: 20px 20px;
     padding-left: 100px;
+
+}
+.review-item h4{
+    color: blue;
 }
 

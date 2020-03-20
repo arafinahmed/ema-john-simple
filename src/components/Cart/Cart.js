@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../Login/useAuth';
 
 const Cart = (props) => {
     const cart = props.cart;
+    
     console.log(cart);
     let total = 0;
     for(let i=0; i<cart.length; i++){
@@ -41,6 +43,7 @@ const Cart = (props) => {
             {
                 props.children
             }
+            
             
         </div>
     );
