@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
     const auth = useAuth();
-    console.log(auth);
+   // console.log(auth);
    
     return (
         <div className="Header">
@@ -19,7 +19,7 @@ const Header = () => {
             <nav>
                 <a href="/shop">Shop</a>
                 <a href="/review">Order Review</a>
-                <a href="/manage">Manage Inventory</a>
+                <a href="/manage">Manage</a>
                 {
                     auth.user &&
                     <span style={{color:'yellow'}}> {auth.user.name}</span> 

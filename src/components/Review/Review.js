@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { getDatabaseCart, removeFromDatabaseCart, processOrder } from '../../utilities/databaseManager';
-import fakeData from '../../fakeData';
 import Reviewitem from '../Reviewitem/Reviewitem';
 import Cart from '../Cart/Cart';
 import './Review.css'
-import happyImage from '../../images/giphy.gif'
+
 import { Link } from 'react-router-dom';
 import { useAuth } from '../Login/useAuth';
 
@@ -19,32 +18,40 @@ const Review = () => {
         removeFromDatabaseCart(proKey);
     }
 
-    const handlePlaceOrder = () => {
-        setCart([]);
-        processOrder();
-        setOrderPlaced(true);
-    }
+    
     
     useEffect(() => {
         //cart
         const savedCart = getDatabaseCart();
         const productKeys = Object.keys(savedCart);
-        const cartProducts = productKeys.map(key => {
-            const product = fakeData.find(pd => pd.key === key);
-            product.quanatity = savedCart[key];
-            const newCart = [...cart, product]
-            
-            return product;
-        });
-        setCart(cartProducts);
+        fetch('http://localhost:4000/getProductsByKey', {
+            method:'POST',
+            body:JSON.stringify(productKeys),
+            headers: {
+               "Content-type": "application/json; charset=UTF-8"
+            }
+
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            const cartProducts = productKeys.map(key => {
+                const product = data.find(pd => pd.key === key);
+                product.quanatity = savedCart[key];
+                const newCart = [...cart, product]
+                
+                return product;
+            });
+            setCart(cartProducts);
+        })
+
+    
+        
        
 
     }, [])
     
-    let thankyou;
-    if(orderPlaced){
-        thankyou = <img src={happyImage}></img>
-    }
+    
     return (
         <div className="review-container">
             <div className="item-container">
@@ -56,9 +63,7 @@ const Review = () => {
                 key = {pd.key}></Reviewitem>)
                 
             }
-            {
-                thankyou
-            }
+            
             {
                 !cart.length && <h1>Your cart is empty
                     <a href="/"> Keep Shopping</a>
