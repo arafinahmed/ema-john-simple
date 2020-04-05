@@ -24,7 +24,7 @@ const Review = () => {
         //cart
         const savedCart = getDatabaseCart();
         const productKeys = Object.keys(savedCart);
-        fetch('http://localhost:4000/getProductsByKey', {
+        fetch('https://stark-anchorage-80275.herokuapp.com/getProductsByKey', {
             method:'POST',
             body:JSON.stringify(productKeys),
             headers: {

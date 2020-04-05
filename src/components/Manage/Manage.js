@@ -5,7 +5,7 @@ const Manage = () => {
     const f = {test: 'test the data'};
     const addProduct = () => {
         
-        fetch('http://localhost:4000/addProduct', {
+        fetch('https://stark-anchorage-80275.herokuapp.com/addProduct', {
             method:'POST',
             body:JSON.stringify(f),
             headers: {
